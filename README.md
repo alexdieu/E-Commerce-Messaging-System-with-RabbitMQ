@@ -46,7 +46,7 @@ docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
 Verify RabbitMQ is running:
 
 - Open http://localhost:15672 in your browser.
-- Optionally, create order_queue and announcements_exchange (fanout type) manually via the UI, though the scripts will auto-create them.
+- Optionally, create `order_queue` and `announcements_exchange` (fanout type) manually via the UI, though the scripts will auto-create them.
 
 ### 3. Run the Scripts
 
@@ -58,7 +58,7 @@ Run multiple consumer instances to simulate competing workers:
 ```bash
 node consumer.js
 ```
-Open additional terminals and run node consumer.js again (e.g., 2-3 instances).
+Open additional terminals and run node consumer.js again (exemple : 2-3 instances).
 
 - Send Orders:
 Run the producer to send an order:
@@ -69,7 +69,7 @@ Repeat this command with different orders (edit the order data in producer.js if
 
 Expected Output:
 Each consumer logs `Waiting for orders in order_queue`.
-When producer.js runs, one consumer processes the order and logs it (e.g., `Received order: { orderId: 101, ... }`).
+When producer.js runs, one consumer processes the order and logs it (exemple : `Received order: { orderId: 101, ... }`).
 
 - Publish/Subscribe (Pub/Sub) Model
     **Start Subscribers**:
@@ -77,7 +77,7 @@ When producer.js runs, one consumer processes the order and logs it (e.g., `Rece
 ```bash
 node sub.js
 ```
-*Open additional terminals and run node sub.js again (e.g., 2-3 instances).*
+*Open additional terminals and run node sub.js again (exemple : 2-3 instances).*
         
 - Send Announcements:
 
@@ -89,7 +89,7 @@ node pub.js
     
 Expected Output:
         Each subscriber logs "Waiting for announcements in queue: <random-queue-name>".`
-        When pub.js runs, all subscribers log the same announcement (e.g., "Received announcement: { title: 'Flash Sale', ... }").
+        When pub.js runs, all subscribers log the same announcement (exemple : "Received announcement: { title: 'Flash Sale', ... }").
 
 ### 4. Stopping the System
 Stop consumers/subscribers with Ctrl+C in their terminals.
