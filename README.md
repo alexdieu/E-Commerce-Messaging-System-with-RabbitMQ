@@ -20,6 +20,7 @@ Before running the system, ensure you have the following installed:
 - `pub.js`: Publishes announcements to `announcements_exchange` (Pub/Sub producer).
 - `sub.js`: Subscribes to `announcements_exchange` and receives announcements (Pub/Sub consumer).
 - `package.json`: Defines dependencies (`amqplib` for RabbitMQ connectivity).
+- `diagram.png`: Diagram of the messaging system architecture (created with Draw.io).
 
 ## Setup Instructions
 
@@ -102,6 +103,17 @@ docker rm rabbitmq
 - Connection Errors: Ensure RabbitMQ is running (docker ps) and the URL (amqp://localhost) is correct.
 - No Messages Received: Verify queue/exchange names match (order_queue, announcements_exchange) and consumers/subscribers are started before producers.
 - Management UI Issues: Check http://localhost:15672 is accessible and credentials work.
+
+### Data choice : json:
+
+- **Simplicity**: JSON is lightweight, human-readable, and easy to parse in Node.js (using `JSON.parse` and `JSON.stringify`), which aligns with the implementation language.
+- **Flexibility**: It supports structured data (e.g., nested objects for orders or announcements), suitable for both scenarios.
+- **Interoperability**: Widely supported across systems, making it ideal for a web application interacting with RabbitMQ and potential future integrations.
+- **Scenario Fit**:
+  - **P2P**: Orders (e.g., `{ "orderId": 101, "customerName": "Pablo Arce", "items": ["Computer"] }`) are simple key-value structures.
+  - **Pub/Sub**: Announcements (e.g., `{ "title": "Discount Sale !! ", "details": "50% off everything !!" }`) are similarly straightforward.
+- **Comparison**: Compared to XML (more verbose) or EDI (too complex for this scope), JSON strikes the right balance for an e-commerce demo.
+
 
 ### Notes
 Messages are persistent `(durable: true, persistent: true)` to survive RabbitMQ restarts, though you’ll need to restart consumers too.
