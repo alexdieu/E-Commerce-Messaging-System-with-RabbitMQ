@@ -1,0 +1,25 @@
+{
+  "name": "ecommerce-messaging-system",
+  "version": "1.2.5",
+  "description": "a simple e-commerce messaging system using RabbitMQ with point ot point and publish // subscribe patterns",
+  "main": "producer.js",
+  "scripts": {
+    "start:producer": "node producer.js",
+    "start:consumer": "node consumer.js",
+    "start:pub": "node pub.js",
+    "start:sub": "node sub.js",
+    "test": "echo \"No tests right now\" && exit 1"
+  },
+  "keywords": [
+    "messaging",
+    "rabbitmq",
+    "nodejs",
+    "p2p",
+    "pubsub"
+  ],
+  "author": "Pablo Arce, Alexandre Divol, Theo Francois--Pichard",
+  "license": "MIT",
+  "dependencies": {
+    "amqplib": "^0.10.3"
+  }
+}
