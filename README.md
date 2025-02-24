@@ -110,9 +110,32 @@ docker rm rabbitmq
 - **Flexibility**: It supports structured data (e.g., nested objects for orders or announcements), suitable for both scenarios.
 - **Interoperability**: Widely supported across systems, making it ideal for a web application interacting with RabbitMQ and potential future integrations.
 - **Scenario Fit**:
-  - **P2P**: Orders (e.g., `{ "orderId": 101, "customerName": "Pablo Arce", "items": ["Computer"] }`) are simple key-value structures.
+  - **P to P**: Orders (e.g., `{ "orderId": 101, "customerName": "Pablo Arce", "items": ["Computer"] }`) are simple key-value structures.
   - **Pub/Sub**: Announcements (e.g., `{ "title": "Discount Sale !! ", "details": "50% off everything !!" }`) are similarly straightforward.
 - **Comparison**: Compared to XML (more verbose) or EDI (too complex for this scope), JSON strikes the right balance for an e-commerce demo.
+
+### Schematization of the system
+
+![Messaging System Architecture](diagram.png)
+
+Highlight both the Point-to-Point (P to P) and Publish/Subscribe (Pub/Sub) patterns:
+
+- **Components**:
+  - **Web Form (Order Producer)**: Sends customer orders to RabbitMQ.
+  - **RabbitMQ (Broker)**: Central hub containing:
+    - `order_queue`: A durable queue for P to P messaging.
+    - `announcements_exchange`: A fanout exchange for Pub/Sub messaging.
+  - **Worker 1 & Worker 2 (Order Consumers)**: Competing consumers that process orders from `order_queue`.
+  - **Announcement Producer**: Publishes announcements to `announcements_exchange`.
+  - **Notification Service, Inventory System, Analytics Dash (Subscribers)**: Services that receive announcements from the exchange.
+
+- **Message Flows**:
+  - **P to P Flow**: 
+    - The `Web Form` sends orders to `order_queue`.
+    - Orders are pulled from `order_queue` by either `Worker 1` or `Worker 2` (one consumer per message), demonstrating task distribution and load balancing.
+  - **Pub/Sub Flow**: 
+    - The `Announcement Producer` publishes messages to `announcements_exchange`.
+    - The fanout exchange broadcasts these messages to all subscribers (`Notification Service`, `Inventory System`, `Analytics Dash`), ensuring each receives a copy.
 
 
 ### Notes
