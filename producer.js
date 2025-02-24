@@ -7,8 +7,9 @@ async function sendOrder(order) {
   const connection =  await amqp.connect(RABBITMQ_URL);
   //Connect to rabbit mq
   const channel =  await connection.createChannel();
-  await channel.assertQueue(QUEUE, {  durable: true  });
+  await channel.assertQueue(QUEUE, {  durable: true  }); //keeping this true so its stores it
   const messageBuffer = Buffer.from(JSON.stringify(order));
+  //sending the message
   channel.sendToQueue(QUEUE, messageBuffer, {  persistent: true });
   console.log("Sent order:", order);
   await channel.close();
