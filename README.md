@@ -33,12 +33,6 @@ cd E-Commerce-Messaging-System-with-RabbitMQ
 npm install
 ```
 
-If you don’t have a package.json yet, create one with:
-```bash
-npm init -y
-npm install amqplib
-```
-
 ### 2. Run RabbitMQ with Docker
 
 Start a RabbitMQ instance with the management UI enabled:
