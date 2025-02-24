@@ -81,17 +81,16 @@ When producer.js runs, one consumer processes the order and logs it (e.g., `Rece
     **Start Subscribers**:
         Run multiple subscriber instances to simulate different services:
 ```bash
-    node sub.js
+node sub.js
 ```
 *Open additional terminals and run node sub.js again (e.g., 2-3 instances).*
         
 - Send Announcements:
 
-    Run the publisher to broadcast an announcement:
-    ```bash
-
-        node pub.js
-    ```
+Run the publisher to broadcast an announcement:
+```bash
+node pub.js
+```
 *Edit pub.js to send different announcements if needed.*
     
 Expected Output:
