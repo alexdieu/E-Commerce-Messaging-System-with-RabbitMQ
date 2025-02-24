@@ -16,5 +16,5 @@ async function sendOrder(order) {
   //connection over order sent
 }
 
-// Simulate a order from web form
+// TEST
 sendOrder({ orderId: 101, customerName: "Pablo Arce", items: ["Computer", "mouse"] });
