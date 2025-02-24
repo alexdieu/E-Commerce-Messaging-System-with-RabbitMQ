@@ -28,8 +28,8 @@ Before running the system, ensure you have the following installed:
 Clone this repository and install the required Node.js package (`amqplib`):
 
 ```bash
-git clone <your-repository-url>
-cd <repository-folder>
+git clone https://github.com/alexdieu/E-Commerce-Messaging-System-with-RabbitMQ/tree/main
+cd E-Commerce-Messaging-System-with-RabbitMQ
 npm install
 ```
 
