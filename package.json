@@ -17,7 +17,7 @@
     "p2p",
     "pubsub"
   ],
-  "author": "Pablo Arce, Alexandre Divol, Theo Francois--Pichard",
+  "author": "Pablo Arce, Alexandre Divol, Theo Francois--Pichard, Hugo Phillibert, Ambroise Driencourt, Clément Misendreau",
   "license": "MIT",
   "dependencies": {
     "amqplib": "^0.10.5",
