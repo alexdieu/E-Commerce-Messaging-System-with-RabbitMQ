@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Sistema de Órdenes - Servidor</title>
+    <title>Consumer - Port</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -19,16 +19,25 @@
         border-bottom: 1px solid #eee;
         padding: 10px 0;
       }
+      .consumer-id {
+        color: #4caf50;
+        font-weight: bold;
+      }
     </style>
     <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
-    <h1>Panel del Servidor - Órdenes Recibidas</h1>
-    <div id="status">Estado: Esperando órdenes...</div>
+    <h1>Consumer - Port <span id="portNumber"></span></h1>
+    <div id="status">Status: Waiting for orders...</div>
     <div id="orderList"></div>
 
     <script>
       const socket = io();
+
+      // Obtener el puerto del URL
+      const port = window.location.port;
+      document.getElementById("portNumber").textContent = port;
+      document.title += port;
 
       function displayOrder(orderData) {
         const orderList = document.getElementById("orderList");
@@ -36,10 +45,13 @@
         orderDiv.className = "order-item";
         const order = orderData.order;
         orderDiv.innerHTML = `
-          <p><strong>ID de Orden:</strong> ${order.orderId}</p>
-          <p><strong>Cliente:</strong> ${order.customerName}</p>
+          <p><strong>Order ID:</strong> ${order.orderId}</p>
+          <p><strong>Customer:</strong> ${order.customerName}</p>
           <p><strong>Items:</strong> ${order.items.join(", ")}</p>
-          <p><strong>Hora:</strong> ${orderData.timestamp}</p>
+          <p><strong>Time:</strong> ${orderData.timestamp}</p>
+          <p><span class="consumer-id">Processed by Consumer on port: ${
+            orderData.consumerId
+          }</span></p>
         `;
         orderList.insertBefore(orderDiv, orderList.firstChild);
       }
