@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sistema de Órdenes - Servidor</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      #orderList {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-top: 20px;
+      }
+      .order-item {
+        border-bottom: 1px solid #eee;
+        padding: 10px 0;
+      }
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <h1>Panel del Servidor - Órdenes Recibidas</h1>
+    <div id="status">Estado: Esperando órdenes...</div>
+    <div id="orderList"></div>
+
+    <script>
+      const socket = io();
+
+      function displayOrder(orderData) {
+        const orderList = document.getElementById("orderList");
+        const orderDiv = document.createElement("div");
+        orderDiv.className = "order-item";
+        const order = orderData.order;
+        orderDiv.innerHTML = `
+          <p><strong>ID de Orden:</strong> ${order.orderId}</p>
+          <p><strong>Cliente:</strong> ${order.customerName}</p>
+          <p><strong>Items:</strong> ${order.items.join(", ")}</p>
+          <p><strong>Hora:</strong> ${orderData.timestamp}</p>
+        `;
+        orderList.insertBefore(orderDiv, orderList.firstChild);
+      }
+
+      socket.on("newOrder", (orderData) => {
+        displayOrder(orderData);
+      });
+    </script>
+  </body>
+</html>

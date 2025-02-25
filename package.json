@@ -20,6 +20,8 @@
   "author": "Pablo Arce, Alexandre Divol, Theo Francois--Pichard",
   "license": "MIT",
   "dependencies": {
-    "amqplib": "^0.10.3"
+    "amqplib": "^0.10.5",
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
   }
 }

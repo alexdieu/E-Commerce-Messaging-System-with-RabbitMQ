@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sistema de Órdenes - Cliente</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+      select[multiple] {
+        height: 120px;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      button {
+        padding: 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Crear Nueva Orden</h1>
+    <div id="message"></div>
+
+    <form id="orderForm">
+      <div class="form-group">
+        <label for="customerName">Nombre del Cliente:</label>
+        <input type="text" id="customerName" required />
+      </div>
+      <div class="form-group">
+        <label for="items">Selecciona Productos:</label>
+        <select id="items" multiple>
+          <option value="Computer">Computadora</option>
+          <option value="Mouse">Mouse</option>
+          <option value="Keyboard">Teclado</option>
+          <option value="Monitor">Monitor</option>
+          <option value="Headphones">Auriculares</option>
+        </select>
+      </div>
+      <button type="submit">Enviar Orden</button>
+    </form>
+
+    <script>
+      function generateOrderId() {
+        return Math.floor(Math.random() * 1000) + 1;
+      }
+
+      async function handleFormSubmit(event) {
+        event.preventDefault();
+        const customerName = document.getElementById("customerName").value;
+        const selectedItems = Array.from(
+          document.getElementById("items").selectedOptions
+        ).map((option) => option.value);
+
+        const order = {
+          orderId: generateOrderId(),
+          customerName: customerName,
+          items: selectedItems,
+        };
+
+        try {
+          const response = await fetch("/send-order", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(order),
+          });
+
+          if (response.ok) {
+            document.getElementById("message").textContent =
+              "Orden enviada con éxito!";
+            document.getElementById("orderForm").reset();
+          }
+        } catch (error) {
+          document.getElementById("message").textContent =
+            "Error al enviar la orden";
+        }
+      }
+
+      document
+        .getElementById("orderForm")
+        .addEventListener("submit", handleFormSubmit);
+    </script>
+  </body>
+</html>
