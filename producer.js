@@ -4,13 +4,13 @@ const RABBITMQ_URL = "amqp://localhost";
 
 //Simple send an order function using Rabbit MQ to simulate
 async function sendOrder(order) {
-  const connection =  await amqp.connect(RABBITMQ_URL);
+  const connection = await amqp.connect(RABBITMQ_URL);
   //Connect to rabbit mq
-  const channel =  await connection.createChannel();
-  await channel.assertQueue(QUEUE, {  durable: true  }); //keeping this true so its stores it
+  const channel = await connection.createChannel();
+  await channel.assertQueue(QUEUE, { durable: true }); //keeping this true so its stores it
   const messageBuffer = Buffer.from(JSON.stringify(order));
   //sending the message
-  channel.sendToQueue(QUEUE, messageBuffer, {  persistent: true });
+  channel.sendToQueue(QUEUE, messageBuffer, { persistent: true });
   console.log("Sent order:", order);
   await channel.close();
   await connection.close();
@@ -18,4 +18,8 @@ async function sendOrder(order) {
 }
 
 // TEST
-sendOrder({ orderId: 101, customerName: "Pablo Arce", items: ["Computer", "mouse"] });
+sendOrder({
+  orderId: 101,
+  customerName: "Pablo Arce",
+  items: ["Computer", "mouse"],
+});
